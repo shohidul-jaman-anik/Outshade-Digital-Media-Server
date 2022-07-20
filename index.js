@@ -20,6 +20,7 @@ async function run() {
         await client.connect();
 
         const ApiCollection = client.db("OutshadeData").collection("api");
+        const FormCollection = client.db("OutshadeData").collection("form");
 
         // get data into database
         app.get('/api', async (req, res) => {
@@ -54,6 +55,27 @@ async function run() {
                 $set: data
             }
             const result = await ApiCollection.updateOne(query, updateDoc, upsert)
+            res.send(result)
+        })
+
+        // post user signIn Information
+        app.post('/form',async (req, res) => {
+            const data = req.body
+            const result = await FormCollection.insertOne(data)
+            res.send(result)
+        })
+
+        // Update User Information
+        app.put('/form/:email', async (req, res) => {
+            const email = req.params.email
+            console.log(email)
+            const user = req.body
+            const filter = { email: email };
+            const option = { upsert: true };
+            const updateDoc = {
+                $set: user,
+            }
+            const result = await FormCollection.updateOne(filter, updateDoc, option)
             res.send(result)
         })
 
