@@ -96,4 +96,3 @@ app.listen(port, () => {
     console.log(`Outshade Digital Media listening on port ${port}`)
 })
 
-module.exports = app;
