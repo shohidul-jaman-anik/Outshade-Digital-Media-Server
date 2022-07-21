@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 8000
 
 
 // middlewhare
@@ -24,7 +24,9 @@ async function run() {
 
         // get data into database
         app.get('/api', async (req, res) => {
-            const result = await ApiCollection.find().toArray()
+            // const result = await ApiCollection.find().toArray()
+            // res.send(result)
+            const result = { message: "hellow meya vhi"}
             res.send(result)
         })
 
@@ -59,7 +61,7 @@ async function run() {
         })
 
         // post user signIn Information
-        app.post('/form',async (req, res) => {
+        app.post('/form', async (req, res) => {
             const data = req.body
             const result = await FormCollection.insertOne(data)
             res.send(result)
